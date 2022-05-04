@@ -31,6 +31,21 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const part = await partCollection.findOne(query);
             res.send(part);
+        });
+
+        //POST
+        app.post('/inventory', async(req, res) => {
+            const newItem = req.body;
+            const result = await partCollection.insertOne(newItem);
+            res.send(result);
+        });
+
+        //DELETE
+        app.delete('/inventory/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await partCollection.deleteOne(query);
+            res.send(result);
         })
 
     } finally {
